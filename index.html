@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fontle</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Aclonica|Acme|Advent+Pro|Aguafina+Script|Akronim|Albert+Sans|Alegreya|Aleo|Alex+Brush|Alfa+Slab+One|Allura|Amaranth|Amatic+SC|Anaheim|Anton|Architects+Daughter|Archivo|Arizonia|Bad+Script|Bangers|Barlow|Barrio|Baskervville|Be+Vietnam+Pro|Bebas+Neue|Belleza|Berkshire+Swash|Bilbo|Bitter|Black+Ops+One|Bodoni+Moda|Bonbon|Boogaloo|Bree+Serif|Bubblegum+Sans|Bungee|Butcherman|Butterfly+Kids|Cabin|Cantarell|Carter+One|Catamaran|Caveat|Ceviche+One|Cherry+Swash|Chewy|Chivo|Cinzel|Codystar|Comfortaa|Cookie|Cormorant|Courgette|Covered+By+Your+Grace|Crafty+Girls|Crimson+Text|Cuprum|Cutive">
+  </head>
+  <body>
+    <!--Box 1-->
+    <div class="darkbox">
+      <h1>🔤 FONTLE 🔢</h1>
+      <p>Guess the font in 6 turns!</p>
+      <p>Highlighted characters, including spaces, are in the target font name. Guesses are not case-sensitive. Game created by <a href="https://www.instagram.com/ra.chel.lin">Rachel L</a>.</p>
+    </div>
+    <br>
+    <!--Box 2-->
+    <div class="lightbox">
+      <h2 id="fontfamily">The quick brown fox jumps over the lazy dog.</h2>
+      <label for="guess">Guess:</label>
+      <input type="text" id="guess" name="guess" value="">
+      <button onclick="addGuess()">➡️</button>
+    </div>
+    <br>
+    <!--Box 3-->
+    <div class="lightbox">
+      <h3>Previous Guesses:</h3>
+      <ol id="guesses"></ol>
+      <h2 id="postscript"></h2>
+    </div>
+    <!--JavaScript-->
+    <script>
+      // Choosing font
+      var fonts = ["Abel", "Abril Fatface", "Aclonica", "Acme", "Advent Pro", "Aguafina Script", "Akronim", "Albert Sans", "Alegreya", "Aleo", "Alex Brush", "Alfa Slab One", "Allura", "Amaranth", "Amatic SC", "Anaheim", "Anton", "Architects Daughter", "Archivo", "Arizonia", "Bad Script", "Bangers", "Barlow", "Barrio", "Baskervville", "Be Vietnam Pro", "Bebas Neue", "Belleza", "Berkshire Swash", "Bilbo", "Bitter", "Black Ops One", "Bodoni Moda", "Bonbon", "Boogaloo", "Bree Serif", "Bubblegum Sans", "Bungee", "Butcherman", "Butterfly Kids", "Cabin", "Cantarell", "Carter One", "Catamaran", "Caveat", "Ceviche One", "Cherry Swash", "Chewy", "Chivo", "Cinzel", "Codystar", "Comfortaa", "Cookie", "Cormorant", "Courgette", "Covered By Your Grace", "Crafty Girls", "Crimson Text", "Cuprum", "Cutive"];
+      var myFontID = Math.floor(Math.random()*fonts.length);
+      var myFont = fonts[myFontID];
+      document.getElementById("fontfamily").style.fontFamily=myFont;
+      // Function to highlight correct characters
+      function highlightCharacters(guess, uppercaseGuess, lowercaseGuess) {
+        var result = "";
+        var characters = Array.from(myFont);
+        for (var i = 0; i < guess.length; i++) {
+          if (characters.includes(uppercaseGuess[i]) || characters.includes(lowercaseGuess[i])) {
+            result += ("<mark>" + guess[i] + "</mark>");
+          }
+          else {
+            result += guess[i];
+          }
+        }
+        return result;
+      }
+      // Function to add guess to list
+      function addGuess() {
+        var guess = document.getElementById("guess").value;
+        var uppercaseGuess = guess.toUpperCase();
+        var lowercaseGuess = guess.toLowerCase();
+        var guesses = document.getElementById("guesses");
+        guesses.innerHTML += "<li>" + highlightCharacters(guess, uppercaseGuess, lowercaseGuess) + "</li>";
+        var guessesLength = guesses.getElementsByTagName("li").length;
+        var postscript = document.getElementById("postscript");
+        // Successful guess
+        if (guess == myFont || uppercaseGuess == myFont.toUpperCase() || lowercaseGuess == myFont.toLowerCase()) {
+          // Singular turn
+          if (guessesLength == 1) {
+            postscript.textContent = "You won in ".concat(guessesLength, " turn! The correct font was ", myFont, ".");
+          }
+          // Plural turns
+          else {
+            postscript.textContent = "You won in ".concat(guessesLength, " turns! The correct font was ", myFont, ".");
+          }
+        }
+        // Six guesses failed
+        else if (guessesLength == 6) {
+          postscript.textContent = "You lost! The correct font was ".concat( myFont, ".");
+          // Also end game, disable input and add try again?
+        }
+        // Regular guess
+        else {
+        }
+        guess.value = "";
+      }
+    </script>
+  </body>
+</html>
