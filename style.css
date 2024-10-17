@@ -1,0 +1,32 @@
+body {
+  background: #1c2333;
+  color: white;
+  font-family: "Be Vietnam Pro";
+  text-align: center;
+}
+
+a {
+  color: #57abff;
+}
+
+.darkbox {
+  border-radius: 25px;
+  padding: 0.5%;
+  height: 30%;
+  width: 50%;
+  margin: auto auto;
+}
+
+.lightbox {
+  background: white;
+  color: #1c2333;
+  border-radius: 25px;
+  padding: 0.5%;
+  height: 30%;
+  width: 50%;
+  margin: auto auto;
+}
+
+.mark {
+  background: #f2e088;
+}
